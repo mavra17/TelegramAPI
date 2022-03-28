@@ -10,6 +10,23 @@ namespace TelegramAPI.Models.Commands
 
         public abstract Task Execute(Message message, TelegramBotClient client);
 
-        public abstract bool Contains(Message message);
+        public virtual bool Contains(Message message)
+        {
+            if (message.Type != Telegram.Bot.Types.Enums.MessageType.Text)
+                return false;
+
+            bool resRez = false;
+            if (message.EntityValues != null)
+                foreach (var mesToCom in message.EntityValues)
+                {
+                    if (mesToCom.Contains(this.Name))
+                    {
+                        resRez = true;
+                        break;
+                    }
+                }
+
+            return resRez;
+        }
     }
 }
