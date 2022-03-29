@@ -14,23 +14,28 @@ namespace TelegramAPI.Controllers
         {
             if ( update == null) return Ok();
 
-            var commands = Bot.Commands;
             var message = update.Message;
-            var botClient = await Bot.GetBotClientAsync();
+            var pgbbAction = new PGDBCommand();
 
-            bool comNotFound = true;
-
-            foreach (var command in commands)
+            if (pgbbAction.ChekUpdate(message.MessageId))
             {
-                if (command.Contains(message))
+                var commands = Bot.Commands;
+                var botClient = await Bot.GetBotClientAsync();
+
+                bool comNotFound = true;
+
+                foreach (var command in commands)
                 {
-                    await command.Execute(message, botClient);
-                    comNotFound = false;
-                    break;
+                    if (command.Contains(message))
+                    {
+                        await command.Execute(message, botClient);
+                        comNotFound = false;
+                        break;
+                    }
                 }
+                if (comNotFound)
+                    botClient.SendTextMessageAsync(message.Chat.Id, "Я не понял что ты от меня хочешь", parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
             }
-            if( comNotFound )
-                botClient.SendTextMessageAsync(message.Chat.Id, "Я не понял что ты от меня хочешь", parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
             return Ok();
         }
     }

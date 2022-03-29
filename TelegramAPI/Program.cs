@@ -12,10 +12,15 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
-AppSettings appSettings = new AppSettings(
+AppSettings.SetAppSettings(
     app.Configuration["botName"],
     app.Configuration["botKey"],
-    app.Configuration["botUrl"]
+    app.Configuration["botUrl"],
+    app.Configuration["pgHost"],
+    app.Configuration["pgPort"],
+    app.Configuration["pgDatabase"],
+    app.Configuration["pgUserName"],
+    app.Configuration["pgPassword"]
     );
 
 Bot.GetBotClientAsync().Wait();
