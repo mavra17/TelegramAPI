@@ -53,16 +53,16 @@
             get { return pgPassword; }
         }
 
-        internal static void SetAppSettings(String nameBot, String keyBot, String urlBot, String PgHost, String PgPort, String PgDB, String PgUsName, String PgPass)
+        internal static void SetAppSettings(IConfiguration conf)
         {
-            name = nameBot;
-            key = keyBot;
-            url = urlBot;
-            pgHost = PgHost;
-            pgPort = PgPort;
-            pgDatabase = PgDB;
-            pgUserName = PgUsName;
-            pgPassword = PgPass;
+            name = conf["botName"];
+            key = conf["botKey"];
+            url = conf["botUrl"];
+            pgHost = conf["pgHost"];
+            pgPort = conf["pgPort"];
+            pgDatabase = conf["pgDatabase"];
+            pgUserName = conf["pgUserName"];
+            pgPassword = conf["pgPassword"];
         }
     }
 }

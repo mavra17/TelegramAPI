@@ -34,7 +34,7 @@ namespace TelegramAPI.Controllers
                     }
                 }
                 if (comNotFound)
-                    botClient.SendTextMessageAsync(message.Chat.Id, "Я не понял что ты от меня хочешь", parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
+                    await botClient.SendTextMessageAsync(message.Chat.Id, "Я не понял что ты от меня хочешь", parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
             }
             return Ok();
         }

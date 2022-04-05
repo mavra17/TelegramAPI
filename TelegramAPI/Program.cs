@@ -12,17 +12,22 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
-AppSettings.SetAppSettings(
-    app.Configuration["botName"],
-    app.Configuration["botKey"],
-    app.Configuration["botUrl"],
-    app.Configuration["pgHost"],
-    app.Configuration["pgPort"],
-    app.Configuration["pgDatabase"],
-    app.Configuration["pgUserName"],
-    app.Configuration["pgPassword"]
-    );
+AppSettings.SetAppSettings(app.Configuration);
+
+SetWebHookTelegram();
 
 Bot.GetBotClientAsync().Wait();
 
 app.Run();
+
+
+async void SetWebHookTelegram()
+{
+    using (var client = new HttpClient())
+    {
+        string adr = String.Format("https://api.telegram.org/bot{0}/setwebhook?url={1}",AppSettings.Key,AppSettings.Url);
+        // when exec async we cennot registr bot's webhook
+        var result = client.GetStringAsync(adr).Result;
+        Console.WriteLine("Webhook set result: " + result);
+    }
+}

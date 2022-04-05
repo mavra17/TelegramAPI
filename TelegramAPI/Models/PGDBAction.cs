@@ -8,7 +8,8 @@ namespace TelegramAPI.Models
 
         internal PGDBCommand()
         {
-            conStr = "Host=" + AppSettings.PgHost + ";Port=" + AppSettings.PgPort + ";Username=" + AppSettings.PgUserName + ";Password=" + AppSettings.PgPassword + ";Database=" + AppSettings.PgDatabase;
+            conStr = String.Format("Host={0};Port={1};Username={2};Password={3};Database={4}",
+                AppSettings.PgHost, AppSettings.PgPort, AppSettings.PgUserName, AppSettings.PgPassword, AppSettings.PgDatabase);
         }
         internal bool ChekUpdate(int msgID)
         {
